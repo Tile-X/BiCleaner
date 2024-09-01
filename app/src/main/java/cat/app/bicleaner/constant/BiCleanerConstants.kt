@@ -2,6 +2,10 @@ package cat.app.bicleaner.constant
 
 class BiCleanerConstants {
     companion object {
+        const val BILIBILI_PACKAGE_NAME = "tv.danmaku.bili"
+        const val BILIBILI_HD_PACKAGE_NAME = "tv.danmaku.bilibilihd"
+        const val BILIBILI_GLOBAL_PACKAGE_NAME = "com.bilibili.app.in"
+
         const val PREFERENCES_NAME = "cat.app.bicleaner_preferences"
         const val RULES_FILENAME = "rules.txt"
 

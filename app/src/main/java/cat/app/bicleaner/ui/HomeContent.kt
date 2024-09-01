@@ -9,19 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import cat.app.bicleaner.data.BilibiliDetail
-import cat.app.bicleaner.data.ModuleDetail
 
 @Composable
-fun HomeContent(
-    moduleDetail: ModuleDetail,
-    bilibiliDetail: BilibiliDetail
-) {
+fun HomeContent(viewModel: BiCleanerViewModel) {
+    val moduleDetail = viewModel.moduleDetail
+    val bilibiliDetail = viewModel.bilibiliDetail
     BiCleanerStatusCard(
         activated = moduleDetail.isModuleActivated,
         moduleVersion = moduleDetail.moduleVersionName
     )
-    AvailableVersionNotFoundCard()
+    if (!(bilibiliDetail.isBilibiliInstalled||bilibiliDetail.isBilibiliHDInstalled||bilibiliDetail.isBilibiliGlobalInstalled))
+        AvailableVersionNotFoundCard()
     Spacer(
         modifier = Modifier
             .padding(vertical = 16.dp)
@@ -39,11 +37,26 @@ fun HomeContent(
             .padding(horizontal = 16.dp, vertical = 8.dp),
         thickness = 1.dp
     )
-    BilibiliCard(
-        bilibiliName = bilibiliDetail.bilibiliName,
-        bilibiliIcon = bilibiliDetail.bilibiliIcon,
-        bilibiliVersionName = bilibiliDetail.bilibiliVersionName,
-        bilibiliVersionCode = bilibiliDetail.bilibiliVersionCode
-    )
+    if (bilibiliDetail.isBilibiliInstalled)
+        BilibiliCard(
+            bilibiliName = bilibiliDetail.bilibiliName,
+            bilibiliIcon = bilibiliDetail.bilibiliIcon,
+            bilibiliVersionName = bilibiliDetail.bilibiliVersionName,
+            bilibiliVersionCode = bilibiliDetail.bilibiliVersionCode
+        )
+    if (bilibiliDetail.isBilibiliHDInstalled)
+        BilibiliCard(
+            bilibiliName = bilibiliDetail.bilibiliHDName,
+            bilibiliIcon = bilibiliDetail.bilibiliHDIcon,
+            bilibiliVersionName = bilibiliDetail.bilibiliHDVersionName,
+            bilibiliVersionCode = bilibiliDetail.bilibiliHDVersionCode
+        )
+    if (bilibiliDetail.isBilibiliGlobalInstalled)
+        BilibiliCard(
+            bilibiliName = bilibiliDetail.bilibiliGlobalName,
+            bilibiliIcon = bilibiliDetail.bilibiliGlobalIcon,
+            bilibiliVersionName = bilibiliDetail.bilibiliGlobalVersionName,
+            bilibiliVersionCode = bilibiliDetail.bilibiliGlobalVersionCode
+        )
     //BiCleanerDetailCard()
 }

@@ -11,31 +11,29 @@ import androidx.compose.ui.graphics.asImageBitmap
 class PackageUtils {
     companion object {
 
-        private const val BILIBILI_PACKAGE_NAME = "tv.danmaku.bili"
-
-        fun loadBilibiliName(pm: PackageManager): String {
-             return getApplicationInfo(pm, BILIBILI_PACKAGE_NAME)!!.loadLabel(pm).toString()
+        fun loadApplicationName(pm: PackageManager, packageName: String): String {
+             return getApplicationInfo(pm, packageName)!!.loadLabel(pm).toString()
         }
 
-        fun loadBilibiliVersionName(pm: PackageManager): String {
-            return getPackageInfo(pm, BILIBILI_PACKAGE_NAME)!!.versionName
+        fun loadApplicationVersionName(pm: PackageManager, packageName: String): String {
+            return getPackageInfo(pm, packageName)!!.versionName
         }
 
-        fun loadBilibiliVersionCode(pm: PackageManager): Int {
-            return getPackageInfo(pm, BILIBILI_PACKAGE_NAME)!!.versionCode
+        fun loadApplicationVersionCode(pm: PackageManager, packageName: String): Int {
+            return getPackageInfo(pm, packageName)!!.versionCode
         }
 
-        fun loadBilibiliIcon(pm: PackageManager): ImageBitmap {
-            val bilibili = getApplicationInfo(pm, BILIBILI_PACKAGE_NAME)
+        fun loadApplicationIcon(pm: PackageManager, packageName: String): ImageBitmap {
+            val application = getApplicationInfo(pm, packageName)
             var icon = Bitmap.createBitmap(192, 192, Bitmap.Config.ALPHA_8)
-            if (bilibili != null) {
-                icon = (bilibili.loadIcon(pm) as BitmapDrawable).bitmap
+            if (application != null) {
+                icon = (application.loadIcon(pm) as BitmapDrawable).bitmap
             }
             return icon.asImageBitmap()
         }
 
-        fun isBilibiliInstalled(pm: PackageManager): Boolean {
-            return getPackageInfo(pm, BILIBILI_PACKAGE_NAME) != null
+        fun isApplicationInstalled(pm: PackageManager, packageName: String): Boolean {
+            return getPackageInfo(pm, packageName) != null
         }
 
         private fun getApplicationInfo(pm: PackageManager, packageName: String): ApplicationInfo? {

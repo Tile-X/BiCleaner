@@ -36,10 +36,7 @@ fun BiCleanerApp(viewModel: BiCleanerViewModel) {
             bottomBarSelectedIndex = selectedIndex
         ) {
             when (selectedIndex.intValue) {
-                0 -> HomeContent(
-                    moduleDetail = viewModel.moduleDetail,
-                    bilibiliDetail = viewModel.bilibiliDetail
-                )
+                0 -> HomeContent(viewModel)
                 1 -> LoggingContent()
                 2 -> SettingContent(viewModel)
             }
