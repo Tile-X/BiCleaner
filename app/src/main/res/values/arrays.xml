@@ -3,5 +3,7 @@
     <string-array name="xposedscope">
         <item>cat.app.bicleaner</item>
         <item>tv.danmaku.bili</item>
+        <item>tv.danmaku.bilibilihd</item>
+        <item>com.bilibili.app.in</item>
     </string-array>
 </resources>

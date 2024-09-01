@@ -8,7 +8,8 @@ class MainHook: IXposedHookLoadPackage {
 
     private val handlers: Array<HookHandler> = arrayOf(
         ModuleUtilsHooker(),
-        BilibiliHooker()
+        BilibiliHooker(),
+        BilibiliGlobalHooker()
     )
 
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
