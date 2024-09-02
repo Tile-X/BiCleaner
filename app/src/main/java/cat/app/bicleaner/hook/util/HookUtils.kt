@@ -11,3 +11,8 @@ fun Any?.get(fieldName: String): Any? {
     if (this == null) return null
     return XposedHelpers.getObjectField(this, fieldName)
 }
+
+fun Any?.set(fieldName: String, value: Any?) {
+    if (this == null) return
+    XposedHelpers.setObjectField(this, fieldName, value)
+}
