@@ -1,15 +1,15 @@
-package cat.app.bicleaner.hook
+package cat.app.bicleaner.hook.handler
 
 import cat.app.bicleaner.BuildConfig
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 
-class ModuleUtilsHooker: XC_MethodHook(), HookHandler {
-
+class ModuleUtilsHooker: HookHandler {
     private val moduleVersionName = BuildConfig.VERSION_NAME;
     private val moduleVersionCode = BuildConfig.VERSION_CODE;
+    private val scopes = setOf("cat.app.bicleaner")
 
-    override fun getScopePackage() = "cat.app.bicleaner"
+    override fun matchScope(packageName: String) = scopes.contains(packageName)
 
     override fun handleHook(classloader: ClassLoader) {
         XposedHelpers.findAndHookMethod(

@@ -1,6 +1,9 @@
 package cat.app.bicleaner.hook
 
 import android.util.Log
+import cat.app.bicleaner.hook.handler.BilibiliHooker
+import cat.app.bicleaner.hook.handler.HookHandler
+import cat.app.bicleaner.hook.handler.ModuleUtilsHooker
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
@@ -9,12 +12,11 @@ class MainHook: IXposedHookLoadPackage {
     private val handlers: Array<HookHandler> = arrayOf(
         ModuleUtilsHooker(),
         BilibiliHooker(),
-        BilibiliGlobalHooker()
     )
 
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
         handlers.forEach { handler ->
-            if (lpparam.packageName == handler.getScopePackage()) {
+            if (handler.matchScope(lpparam.packageName)) {
                 handler.handleHook(lpparam.classLoader)
                 Log.d("lookcat", "hook: ${lpparam.packageName}")
             }
