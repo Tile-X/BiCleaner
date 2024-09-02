@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,12 +58,12 @@ fun BiCleanerStatusCard(
             )
             Column {
                 Text(
-                    text = if (activated) "模组已激活" else "模组未激活",
+                    text = if (activated) stringResource(R.string.module_activated) else stringResource(R.string.module_not_activated),
                     fontSize = 18.sp,
                     color = Color.Black
                 )
                 Text(
-                    text =  if (activated) moduleVersion else "请前往模块管理界面激活该模块"
+                    text =  if (activated) moduleVersion else stringResource(R.string.module_activated_tips)
                 )
             }
         }
@@ -96,7 +97,7 @@ fun AvailableVersionNotFoundCard() {
             )
             Text(
                 modifier = Modifier.padding(start = 8.dp),
-                text = "未发现可用的 Bilibili 版本",
+                text = stringResource(R.string.available_bilibili_version_not_found),
                 fontSize = 18.sp,
             )
         }
@@ -142,7 +143,7 @@ fun BilibiliCard(
                     color = MaterialTheme.colorScheme.onSecondary
                 )
                 Text(
-                    text = "Version $bilibiliVersionName($bilibiliVersionCode)",
+                    text = stringResource(R.string.version_format, bilibiliVersionName, bilibiliVersionCode),
                     color = MaterialTheme.colorScheme.onSecondary
                 )
             }
@@ -172,11 +173,11 @@ fun BiCleanerDetailCard() {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "累计过滤评论",
+                    text = stringResource(R.string.total_filter_reply_count),
                     fontSize = 20.sp,
                 )
                 Text(
-                    text = "N/A 条",
+                    text = stringResource(R.string.na),
                     fontSize = 20.sp,
                     color = Color.Gray,
                     textDecoration = TextDecoration.Underline
@@ -188,11 +189,11 @@ fun BiCleanerDetailCard() {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "累计过滤用户",
+                    text = stringResource(R.string.total_filter_member_count),
                     fontSize = 20.sp,
                 )
                 Text(
-                    text = "N/A 名",
+                    text = stringResource(R.string.na),
                     fontSize = 20.sp,
                     color = Color.Gray,
                     textDecoration = TextDecoration.Underline

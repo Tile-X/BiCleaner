@@ -7,8 +7,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import cat.app.bicleaner.R
 
 @Composable
 fun HomeContent(viewModel: BiCleanerViewModel) {
@@ -29,7 +31,7 @@ fun HomeContent(viewModel: BiCleanerViewModel) {
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth(),
-        text = "已安装的Bilibili",
+        text = stringResource(R.string.installed_bilibili_list),
         textAlign = TextAlign.Start
     )
     HorizontalDivider(

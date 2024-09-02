@@ -23,6 +23,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import cat.app.bicleaner.R
 import cat.app.bicleaner.theme.BiCleanerAppTheme
@@ -50,7 +51,7 @@ fun BiCleanerScaffold(
     bottomBarSelectedIndex: MutableState<Int>,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val titles = setOf("概览", "日志", "设置")
+    val titles = stringArrayResource(R.array.titles).toSet()
     val icons = setOf(Icons.Filled.Home, Icons.Filled.Info, Icons.Filled.Settings)
     Scaffold (
         modifier = modifier,

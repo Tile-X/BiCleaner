@@ -31,19 +31,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-@Preview
-@Composable
-fun PreviewBiCleanerPreference() {
-    //BiCleanerSwitchPreference(title = "开启模块", summary = "Off", checked = false)
-    var selectedIndex by remember { mutableIntStateOf(0) }
-    BiCleanerSelectionPreference(
-        title = "模块过滤阈值",
-        selectedIndex = selectedIndex,
-        items = setOf("LV.1", "LV.2", "LV.3"),
-        onSelectedChanged = { index -> selectedIndex = index }
-    )
-}
-
 @Composable
 fun BiCleanerPreference(
     modifier: Modifier = Modifier,

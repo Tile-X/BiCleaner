@@ -5,6 +5,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import cat.app.bicleaner.R
 
 @Composable
 fun BiCleanerTextFieldDialog(
@@ -23,8 +25,8 @@ fun BiCleanerTextFieldDialog(
                 onValueChange = onTextValueChanged,
             )
         },
-        confirmButton = { TextButton(onClick = onConfirmButtonClick) { Text("确定") } },
-        dismissButton = { TextButton(onClick = onDismissButtonClick) { Text("取消") } },
+        confirmButton = { TextButton(onClick = onConfirmButtonClick) { Text(stringResource(R.string.confirm)) } },
+        dismissButton = { TextButton(onClick = onDismissButtonClick) { Text(stringResource(R.string.dismiss)) } },
         onDismissRequest = { }
     )
 }
@@ -39,8 +41,8 @@ fun BiCleanerAlertDialog(
     AlertDialog(
         title = { Text(title) },
         text = { Text(text) },
-        confirmButton = { TextButton(onClick = onConfirmButtonClick) { Text("确定") } },
-        dismissButton = { TextButton(onClick = onDismissButtonClick) { Text("取消") } },
+        confirmButton = { TextButton(onClick = onConfirmButtonClick) { Text(stringResource(R.string.confirm)) } },
+        dismissButton = { TextButton(onClick = onDismissButtonClick) { Text(stringResource(R.string.dismiss)) } },
         onDismissRequest = { },
     )
 }
