@@ -5,13 +5,10 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import cat.app.bicleaner.constant.BiCleanerConstants.Companion.PREFERENCES_NAME
-import cat.app.bicleaner.constant.BiCleanerConstants.Companion.RULES_FILENAME
 import cat.app.bicleaner.data.BilibiliDetail
 import cat.app.bicleaner.data.ModuleDetail
 import cat.app.bicleaner.data.PreferencesData
 import cat.app.bicleaner.data.PreferencesDetail
-import cat.app.bicleaner.util.FileHelper
-import cat.app.bicleaner.util.ModuleUtils
 import cat.app.bicleaner.util.SharedPreferencesHelper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,8 +24,6 @@ class BiCleanerViewModel(context: Context) : ViewModel() {
     private val preferencesData = PreferencesData(SharedPreferencesHelper(context.getSharedPreferences(
         PREFERENCES_NAME, Context.MODE_WORLD_READABLE)))
 
-    private val rulesFile = FileHelper(ModuleUtils.getPreferencesDir(context), RULES_FILENAME)
-
     private val _preferencesDetail = MutableStateFlow(
         PreferencesDetail(
             moduleEnable = preferencesData.moduleEnable,
@@ -36,7 +31,7 @@ class BiCleanerViewModel(context: Context) : ViewModel() {
             filterByRules = preferencesData.filterByRules,
             showFilter = preferencesData.showFilter,
             requiredLevel = preferencesData.requiredLevel - 1,
-            ruleCount = rulesFile.reads().size
+            ruleCount = preferencesData.rules.size
         )
     )
 
@@ -77,13 +72,16 @@ class BiCleanerViewModel(context: Context) : ViewModel() {
 
     fun onAddRulesDialogConfirmClicked(rulesStr: String) {
         Log.d("lookcat", "rules: $rulesStr")
-        val rules = rulesStr.split(System.lineSeparator())
-        val cnt = rulesFile.lines(rules)
-        _preferencesDetail.update { detail -> detail.copy(ruleCount = detail.ruleCount + cnt, isShowAddRulesDialog = false) }
+        val newRules = rulesStr.split(System.lineSeparator()).filter { it.isNotBlank() }
+        val rulesSet = HashSet<String>()
+        rulesSet.addAll(preferencesData.rules)
+        rulesSet.addAll(newRules)
+        preferencesData.rules = rulesSet
+        _preferencesDetail.update { detail -> detail.copy(ruleCount = rulesSet.size, isShowAddRulesDialog = false) }
     }
 
     fun onClearRulesDialogConfirmClicked() {
-        rulesFile.clear()
+        preferencesData.rules = setOf()
         _preferencesDetail.update { detail -> detail.copy(ruleCount = 0, isShowClearRulesDialog = false) }
     }
 

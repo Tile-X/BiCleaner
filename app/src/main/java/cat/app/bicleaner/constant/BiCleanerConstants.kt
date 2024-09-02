@@ -14,5 +14,6 @@ class BiCleanerConstants {
         const val FILTER_BY_RULES = "FILTER_BY_RULES"
         const val SHOW_FILTER = "SHOW_FILTER"
         const val REQUIRED_LEVEL = "REQUIRED_LEVEL"
+        const val REPLY_FILTER_RULES = "REPLY_FILTER_RULES"
     }
 }
