@@ -1,6 +1,5 @@
 package cat.app.bicleaner.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -9,6 +8,7 @@ import cat.app.bicleaner.data.BilibiliDetail
 import cat.app.bicleaner.data.ModuleDetail
 import cat.app.bicleaner.data.PreferencesData
 import cat.app.bicleaner.data.PreferencesDetail
+import cat.app.bicleaner.util.ModuleUtils
 import cat.app.bicleaner.util.SharedPreferencesHelper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,9 +20,8 @@ class BiCleanerViewModel(context: Context) : ViewModel() {
 
     val moduleDetail = ModuleDetail()
 
-    @SuppressLint("WorldReadableFiles")
     private val preferencesData = PreferencesData(SharedPreferencesHelper(context.getSharedPreferences(
-        PREFERENCES_NAME, Context.MODE_WORLD_READABLE)))
+        PREFERENCES_NAME, ModuleUtils.getPreferencesMode())))
 
     private val _preferencesDetail = MutableStateFlow(
         PreferencesDetail(

@@ -21,7 +21,7 @@ fun BiCleanerLoggingField() {
             .fillMaxSize(),
         readOnly = true,
         label = { Text("日志") },
-        value = "xxxxx",
+        value = "日志功能暂不可用",
         onValueChange = {}
     )
 }

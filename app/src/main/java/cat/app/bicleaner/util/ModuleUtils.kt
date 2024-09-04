@@ -2,7 +2,6 @@ package cat.app.bicleaner.util
 
 import android.annotation.SuppressLint
 import android.content.Context
-import java.io.File
 
 class ModuleUtils {
     companion object {
@@ -14,16 +13,7 @@ class ModuleUtils {
             return getModuleVersionName() != null
         }
 
-        @SuppressLint("PrivateApi", "DiscouragedPrivateApi")
-        fun getPreferencesDir(context: Context): File {
-            val clazz = Class.forName("android.app.ContextImpl")
-            val getImplMethod = clazz.getDeclaredMethod("getImpl", Context::class.java)
-            getImplMethod.isAccessible = true;
-            val contextImpl = getImplMethod.invoke(null, context)
-            val getPrefsDirMethod = clazz.getDeclaredMethod("getPreferencesDir")
-            getPrefsDirMethod.isAccessible = true
-            val prefsDir = getPrefsDirMethod.invoke(contextImpl)
-            return prefsDir as File
-        }
+        @SuppressLint("WorldReadableFiles")
+        fun getPreferencesMode() = if (isModuleActivated()) Context.MODE_WORLD_READABLE else Context.MODE_PRIVATE
     }
 }

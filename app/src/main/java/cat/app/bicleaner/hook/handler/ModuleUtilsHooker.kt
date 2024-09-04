@@ -18,7 +18,6 @@ class ModuleUtilsHooker: HookHandler {
             "getModuleVersionName",
             object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
-                    super.afterHookedMethod(param)
                     param.result = "$moduleVersionName($moduleVersionCode)"
                 }
             })

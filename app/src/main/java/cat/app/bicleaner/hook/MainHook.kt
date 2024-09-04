@@ -1,10 +1,10 @@
 package cat.app.bicleaner.hook
 
-import android.util.Log
 import cat.app.bicleaner.hook.handler.BilibiliHooker
 import cat.app.bicleaner.hook.handler.HookHandler
 import cat.app.bicleaner.hook.handler.ModuleUtilsHooker
 import de.robv.android.xposed.IXposedHookLoadPackage
+import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
 class MainHook: IXposedHookLoadPackage {
@@ -18,7 +18,7 @@ class MainHook: IXposedHookLoadPackage {
         handlers.forEach { handler ->
             if (handler.matchScope(lpparam.packageName)) {
                 handler.handleHook(lpparam.classLoader)
-                Log.d("lookcat", "hook: ${lpparam.packageName}")
+                XposedBridge.log("Hook: ${lpparam.packageName} successfully!")
             }
         }
     }

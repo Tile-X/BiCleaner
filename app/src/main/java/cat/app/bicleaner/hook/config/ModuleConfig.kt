@@ -8,7 +8,7 @@ import java.util.stream.Collectors
 
 object ModuleConfig {
 
-    val xsp = XSharedPreferences(BuildConfig.APPLICATION_ID)
+    private val xsp = XSharedPreferences(BuildConfig.APPLICATION_ID)
     private val data = PreferencesData(SharedPreferencesHelper(xsp))
 
     val moduleEnable: Boolean
@@ -23,4 +23,13 @@ object ModuleConfig {
         get() = data.requiredLevel
     val rules: Set<Regex>
         get() = data.rules.stream().map { Regex(it) }.collect(Collectors.toSet())
+
+    override fun toString(): String {
+        return "moduleEnable: $moduleEnable\n" +
+                "filterByLevel: $filterByLevel\n" +
+                "filterByRules: $filterByRules\n" +
+                "showFilter: $showFilter\n" +
+                "requiredLevel: $requiredLevel\n" +
+                "rulesCount: ${rules.size}"
+    }
 }

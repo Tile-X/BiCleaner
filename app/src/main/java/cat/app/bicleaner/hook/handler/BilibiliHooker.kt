@@ -6,9 +6,7 @@ import de.robv.android.xposed.XposedHelpers
 
 class BilibiliHooker: XC_MethodHook(), HookHandler {
     private val scopes = setOf("tv.danmaku.bili", "tv.danmaku.bilibilihd", "com.bilibili.app.in")
-    private val filters = listOf(
-        BilibiliRepliesFilter()
-    )
+    private val filter = BilibiliRepliesFilter()
 
     override fun matchScope(packageName: String) = scopes.contains(packageName)
 
@@ -19,9 +17,7 @@ class BilibiliHooker: XC_MethodHook(), HookHandler {
             "getRepliesList",
             object: XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
-                    super.afterHookedMethod(param)
-                    val replies = param.result
-                    filters.forEach { filter -> filter.applyFilter(replies) }
+                    param.result = filter.applyFilter(param.result)
                 }
             })
     }

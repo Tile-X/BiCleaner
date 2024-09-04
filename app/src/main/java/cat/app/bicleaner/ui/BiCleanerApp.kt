@@ -33,6 +33,7 @@ fun BiCleanerApp(viewModel: BiCleanerViewModel) {
     val selectedIndex = remember { mutableIntStateOf(0) }
     BiCleanerAppTheme {
         BiCleanerScaffold(
+            enabled = viewModel.moduleDetail.isModuleActivated,
             modifier = Modifier.fillMaxSize(),
             bottomBarSelectedIndex = selectedIndex
         ) {
@@ -48,6 +49,7 @@ fun BiCleanerApp(viewModel: BiCleanerViewModel) {
 @Composable
 fun BiCleanerScaffold(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     bottomBarSelectedIndex: MutableState<Int>,
     content: @Composable ColumnScope.() -> Unit
 ) {
@@ -58,6 +60,7 @@ fun BiCleanerScaffold(
         topBar = { BiCleanerTopAppBar() },
         bottomBar = {
             BiCleanerNavigationBar(
+                enabled = enabled,
                 icons = icons,
                 titles = titles,
                 selectedIndex = bottomBarSelectedIndex
@@ -88,6 +91,7 @@ fun BiCleanerTopAppBar(
 @Composable
 fun BiCleanerNavigationBar(
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     selectedIndex: MutableState<Int>,
     titles: Set<String>,
     icons: Set<ImageVector>
@@ -95,6 +99,7 @@ fun BiCleanerNavigationBar(
     NavigationBar (modifier = modifier) {
         titles.forEachIndexed { index, title ->
             NavigationBarItem(
+                enabled = enabled,
                 selected = selectedIndex.value == index,
                 onClick = { selectedIndex.value = index },
                 label = { Text(title) },
