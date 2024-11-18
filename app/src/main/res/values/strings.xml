@@ -1,25 +1,3 @@
 <resources>
     <string name="app_name">BiCleaner</string>
-    <string name="version_format">Version %s(%d)</string>
-    <string name="module_activated">模组已激活</string>
-    <string name="module_not_activated">模组未激活</string>
-    <string name="module_activated_tips">请前往模块管理界面激活该模块</string>
-    <string name="installed_bilibili_list">已安装的Bilibili</string>
-    <string name="available_bilibili_version_not_found">未发现可用的 Bilibili 版本</string>
-    <string name="total_filter_reply_count">累计过滤评论</string>
-    <string name="total_filter_member_count">累计过滤用户</string>
-    <string name="module_enable">启用模块</string>
-    <string name="show_filter_replies">保留过滤痕迹</string>
-    <string name="filter_by_level">根据等级过滤</string>
-    <string name="filter_required_level">评论过滤阈值</string>
-    <string name="filter_by_rules">根据规则过滤</string>
-    <string name="add_reply_filter_rules">添加过滤规则</string>
-    <string name="clear_reply_filter_rules">清除所有规则</string>
-    <string name="clear_all_reply_rule_ask">您确定要删除所有过滤规则吗?</string>
-    <string name="enable">启用</string>
-    <string name="disable">关闭</string>
-    <string name="row_format">%d 条</string>
-    <string name="na">N/A</string>
-    <string name="confirm">确定</string>
-    <string name="dismiss">取消</string>
 </resources>
