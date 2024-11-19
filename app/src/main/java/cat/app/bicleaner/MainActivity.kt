@@ -21,20 +21,18 @@ class MainActivity : ComponentActivity() {
         setContent {
             BiCleanerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    Text(
+                        text = if (MainActivity.isModuleActive()) "模块启用" else "模块未启用",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
         }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+    companion object {
+        fun isModuleActive(): Boolean {
+            return false
+        }
+    }
 }
