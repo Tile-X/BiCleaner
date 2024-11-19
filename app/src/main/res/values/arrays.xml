@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="xposedscope">
+        <item>cat.app.bicleaner</item>
+        <item>tv.danmaku.bili</item>
+        <item>tv.danmaku.bilibilihd</item>
+        <item>com.bilibili.app.in</item>
+    </string-array>
+    <string-array name="titles">
+        <item>概览</item>
+        <item>日志</item>
+        <item>设置</item>
+    </string-array>
+    <string-array name="levels">
+        <item>LV.1</item>
+        <item>LV.2</item>
+        <item>LV.3</item>
+        <item>LV.4</item>
+        <item>LV.5</item>
+        <item>LV.6</item>
+    </string-array>
+</resources>
