@@ -1,16 +1,40 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.lsplugin.cmaker)
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
+}
+
+cmaker {
+    default {
+        targets("bicleaner")
+        abiFilters("armeabi-v7a", "arm64-v8a", "x86")
+        arguments += arrayOf(
+            "-DANDROID_STL=c++_static",
+            "-DCMAKE_CXX_STANDARD=23",
+            "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON",
+        )
+        cFlags += "-flto"
+        cppFlags += "-flto"
+    }
+
+    buildTypes {
+        arguments += "-DDEBUG_SYMBOLS_PATH=${
+            layout.buildDirectory.file("symbols/${it.name}").get().asFile.absolutePath
+        }"
+    }
 }
 
 android {
     namespace = "cat.app.bicleaner"
-    compileSdk = 34
+    compileSdk = 35
+    buildToolsVersion = "35.0.0"
+    ndkVersion = "27.0.12077973"
 
     defaultConfig {
         applicationId = "cat.app.bicleaner"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -36,6 +60,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    packaging {
+        resources {
+            excludes += "**"
+        }
+    }
     buildFeatures {
         compose = true
         buildConfig = true
@@ -46,6 +75,12 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path("src/main/jni/CMakeLists.txt")
+            version = "3.28.0+"
         }
     }
 }
@@ -71,5 +106,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    compileOnly(libs.api)
+    compileOnly(libs.xposed)
+    implementation(libs.cxx)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 }
