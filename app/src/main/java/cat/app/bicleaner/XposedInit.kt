@@ -1,11 +1,23 @@
 package cat.app.bicleaner
 
 import android.app.Activity
+import android.app.Application
+import android.app.Instrumentation
+import android.content.Context
 import android.content.res.Resources
 import android.content.res.XModuleResources
+import android.os.Build
 import cat.app.bicleaner.hook.BaseHooker
+import cat.app.bicleaner.hook.SettingHooker
+import cat.app.bicleaner.property.Bilibili
+import cat.app.bicleaner.property.Constant
+import cat.app.bicleaner.property.Constant.BILIBILI_MAIN_ACTIVITY
 import cat.app.bicleaner.utils.Log
+import cat.app.bicleaner.utils.findClassOrNull
+import cat.app.bicleaner.utils.getPackageVersion
 import cat.app.bicleaner.utils.hookBeforeMethod
+import cat.app.bicleaner.utils.is64
+import cat.app.bicleaner.utils.isBuiltIn
 import cat.app.bicleaner.utils.replaceMethod
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.IXposedHookZygoteInit
@@ -31,13 +43,30 @@ class XposedInit : IXposedHookLoadPackage, IXposedHookZygoteInit {
             return
         }
 
+        if (!Constant.BILIBILI_PACKAGE_NAME.containsValue(lpparam.packageName) &&
+            BILIBILI_MAIN_ACTIVITY.findClassOrNull(lpparam.classLoader) == null
+        ) return
+
+        Instrumentation::class.java.hookBeforeMethod(
+            "callApplicationOnCreate",
+            Application::class.java
+        ) { param ->
+            if (lpparam.processName.contains(":")) return@hookBeforeMethod
+            Log.d("BiliBili process launched ...")
+            Log.d("BiCleaner version: ${BuildConfig.VERSION_NAME}(${BuildConfig.VERSION_CODE}) from $modulePath${if (isBuiltIn) "(BuiltIn)" else ""}")
+            Log.d("Bilibili version: ${getPackageVersion(lpparam.packageName)} (${if (is64) "64" else "32"}bit)")
+            Log.d("SDK: ${Build.VERSION.RELEASE}(${Build.VERSION.SDK_INT}); Phone: ${Build.BRAND} ${Build.MODEL}")
+            Bilibili(lpparam.classLoader, param.args[0] as Context)
+            registerHooker(SettingHooker(lpparam.classLoader))
+        }
+
         lazyHooker = Activity::class.java.hookBeforeMethod("onResume") {
-            callAllLazyHook()
+            callLazyHookers()
             lazyHooker?.unhook()
         }
     }
 
-    private fun registerHook(hooker: BaseHooker) {
+    private fun registerHooker(hooker: BaseHooker) {
         try {
             hooker.hook()
             hookers.add(hooker)
@@ -46,7 +75,7 @@ class XposedInit : IXposedHookLoadPackage, IXposedHookZygoteInit {
         }
     }
 
-    private fun callAllLazyHook() {
+    private fun callLazyHookers() {
         hookers.forEach {
             try {
                 it.lazyHook()
